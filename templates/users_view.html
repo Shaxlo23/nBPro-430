@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users List</title>
+</head>
+<body>
+
+    <h1>All Users</h1>
+    <hr>
+
+    {% for user in users %}
+        <div style="border:1px solid black; margin:10px; padding:10px;">
+            
+            <h3>
+                <a href="{% url 'user_view' user.slug %}">
+                    {{ user.email }}
+                </a>
+            </h3>
+
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" width="150px">
+            {% endif %}
+
+            <p>Phone: {{ user.phone_number }}</p>
+            <hr>
+            <p>Slug: {{ user.slug }}</p>
+            <hr>
+            <p>Created at: {{ user.created_at }}</p>
+            <hr>
+
+        </div>
+    {% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update User</title>
+</head>
+
+<body style="font-family:Arial; background:#f4f4f4;">
+
+    <h1 style="text-align:center;">Update User</h1>
+
+    <form method="post"
+          enctype="multipart/form-data"
+
+          style="width:350px;
+                 margin:auto;
+                 background:white;
+                 padding:20px;
+                 border-radius:10px;
+                 box-shadow:0px 0px 10px rgba(0,0,0,0.1);">
+
+        {% csrf_token %}
+
+        <label>First Name:</label>
+        <br>
+
+        <input type="text"
+               name="first_name"
+               value="{{ user.first_name }}"
+
+               style="width:100%;
+                      padding:8px;
+                      margin-top:5px;">
+
+        <br><br>
+
+        <label>Last Name:</label>
+        <br>
+
+        <input type="text"
+               name="last_name"
+               value="{{ user.last_name }}"
+
+               style="width:100%;
+                      padding:8px;
+                      margin-top:5px;">
+
+        <br><br>
+
+        <label>Email:</label>
+        <br>
+
+        <input type="email"
+               name="email"
+               value="{{ user.email }}"
+
+               style="width:100%;
+                      padding:8px;
+                      margin-top:5px;">
+
+        <br><br>
+
+        <label>Current Avatar:</label>
+        <br><br>
+
+        {% if user.avatar %}
+            <img src="{{ user.avatar.url }}"
+             width="120px"
+             style="border-radius:8px;">
+        {% else %}
+            <p>No avatar</p>
+        {% endif %}
+
+        <br><br>
+
+        <label>New Avatar:</label>
+        <br>
+
+        <input type="file"
+               name="avatar"
+               style="margin-top:5px;">
+
+        <br><br>
+
+        <label>Phone Number:</label>
+        <br>
+
+        <input type="text"
+               name="phone_number"
+               value="{{ user.phone_number }}"
+
+               style="width:100%;
+                      padding:8px;
+                      margin-top:5px;">
+
+        <br><br>
+
+        <button type="submit"
+
+                style="width:100%;
+                       padding:10px;
+                       background:black;
+                       color:white;
+                       border:none;
+                       border-radius:5px;
+                       cursor:pointer;">
+
+            Update User
+
+        </button>
+
+    </form>
+
+</body>
+</html>
