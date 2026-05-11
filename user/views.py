@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth import get_user_model
 from . import models
+
 # Create your views here.
 
 User = get_user_model()

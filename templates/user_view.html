@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 <h2 style="margin-bottom:10px; font-family:Arial;">
     <b>{{ user.first_name }} {{ user.last_name }}</b>
 </h2>
@@ -29,3 +33,24 @@
     <hr>
 
 </div>
+
+    <a href="{% url 'user_update' user.slug %}"
+        style="padding:8px 12px;
+          background:green;
+          color:white;
+          text-decoration:none;
+          border-radius:5px;
+          margin-right:10px;">
+        Update
+    </a>
+
+    <a href="{% url 'user_delete' user.slug %}"
+        style="padding:8px 12px;
+          background:red;
+          color:white;
+          text-decoration:none;
+          border-radius:5px;">
+        Delete
+    </a>
+{% endblock %}
+
