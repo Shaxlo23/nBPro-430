@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="padding: 20px;">
+
+    <h1>🏠 Home Page</h1>
+    <p>Welcome to the home page!</p>
+
+    <hr>
+
+    <h2>👥 Users List</h2>
+
+    {% if users %}
+        <ul>
+            {% for user in users %}
+
+                {% if user.slug %}
+                    <li>
+                        <a href="{% url 'user_view' user.slug %}">
+                            {{ user.first_name }} {{ user.last_name }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        {{ user.first_name }} {{ user.last_name }} (no slug)
+                    </li>
+                {% endif %}
+
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="
+    max-width:500px;
+    margin:40px auto;
+    padding:20px;
+    border:1px solid #ddd;
+    border-radius:10px;
+">
+
+    <h1 style="text-align:center; margin-bottom:20px;">
+        My Profile
+    </h1>
+
+    {% if user.avatar %}
+        <div style="text-align:center;">
+            <img src="{{ user.avatar.url }}"
+                 alt="avatar"
+                 style="
+                    width:150px;
+                    height:150px;
+                    object-fit:cover;
+                    border-radius:50%;
+                 ">
+        </div>
+    {% endif %}
+
+    <div style="margin-top:20px;">
+
+        <p>
+            <strong>First Name:</strong>
+            {{ user.first_name }}
+        </p>
+
+        <p>
+            <strong>Last Name:</strong>
+            {{ user.last_name }}
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            {{ user.email }}
+        </p>
+
+        <p>
+            <strong>Phone Number:</strong>
+            {{ user.phone_number }}
+        </p>
+
+    </div>
+
+    <div style="
+        margin-top:20px;
+        display:flex;
+        gap:10px;
+    ">
+
+        <a href="{% url 'user_update' user.slug %}"
+           style="
+                padding:10px 15px;
+                background:blue;
+                color:white;
+                text-decoration:none;
+                border-radius:5px;
+           ">
+            Edit Profile
+        </a>
+
+        <a href="{% url 'logout' %}"
+           style="
+                padding:10px 15px;
+                background:red;
+                color:white;
+                text-decoration:none;
+                border-radius:5px;
+           ">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
