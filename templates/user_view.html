@@ -2,55 +2,159 @@
 
 {% block content %}
 
-<h2 style="margin-bottom:10px; font-family:Arial;">
-    <b>{{ user.first_name }} {{ user.last_name }}</b>
-</h2>
+<div style="max-width:600px; margin:40px auto;">
 
-<hr>
+    <div class="dark-card">
 
-<div style="border:1px solid #ccc; margin:10px; padding:15px; border-radius:8px; font-family:Arial;">
+        <!-- NAME -->
+        <h2 style="
+            text-align:center;
+            margin-bottom:15px;
+            font-weight:bold;
+        ">
+            {{ user.first_name }} {{ user.last_name }}
+        </h2>
 
-    <img src="{{ user.avatar.url }}" width="150px" style="border-radius:8px;">
+        <!-- AVATAR -->
+        <div style="text-align:center; margin-bottom:20px;">
 
-    <hr>
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}"
+                     style="
+                        width:160px;
+                        height:160px;
+                        border-radius:50%;
+                        object-fit:cover;
+                        border:3px solid #7c3aed;
+                     ">
+            {% else %}
+                <div style="
+                    width:160px;
+                    height:160px;
+                    margin:auto;
+                    border-radius:50%;
+                    background:#7c3aed;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:50px;
+                    font-weight:bold;
+                    color:white;
+                ">
+                    {{ user.first_name|slice:":1" }}
+                </div>
+            {% endif %}
 
-    <p style="font-size:15px;">
-        <b style="color:#333;">Email:</b> {{ user.email }}
-    </p>
+        </div>
 
-    <hr>
+        <!-- INFO BOX -->
+        <div style="
+            background:#121212;
+            border:1px solid #2d2d2d;
+            border-radius:15px;
+            padding:15px;
+        ">
 
-    <p style="font-size:15px;">
-        <b style="color:#333;">Phone_number:</b> {{ user.phone_number }}
-    </p>
+            <p style="margin:8px 0; color:#ccc;">
+                <b style="color:white;">Email:</b> {{ user.email }}
+            </p>
 
-    <hr>
+            <p style="margin:8px 0; color:#ccc;">
+                <b style="color:white;">Phone Number:</b> {{ user.phone_number }}
+            </p>
 
-    <p style="font-size:15px;">
-        <b style="color:#333;">Created_At:</b> {{ user.created_at }}
-    </p>
+            <p style="margin:8px 0; color:#ccc;">
+                <b style="color:white;">Created At:</b> {{ user.created_at }}
+            </p>
 
-    <hr>
+            <!-- WEBSITE (NEW) -->
+            <p style="margin:8px 0; color:#ccc;">
+                <b style="color:white;">Website:</b>
+
+                {% if user.website %}
+                    <a href="{{ user.website }}" target="_blank" style="color:#7c3aed;">
+                        {{ user.website }}
+                    </a>
+                {% else %}
+                    <span style="color:#777;">No website</span>
+                {% endif %}
+            </p>
+
+            <!-- BIO (NEW) -->
+            <p style="margin:8px 0; color:#ccc;">
+                <b style="color:white;">Bio:</b><br>
+
+                {% if user.bio %}
+                    <span style="color:#aaa;">{{ user.bio }}</span>
+                {% else %}
+                    <span style="color:#777;">No bio yet</span>
+                {% endif %}
+            </p>
+
+            <!-- ROLE -->
+            <p style="margin:8px 0; color:#ccc;">
+                <b style="color:white;">Role:</b>
+
+                {% if user.is_superuser %}
+                    <span style="
+                        background:#ef4444;
+                        color:white;
+                        padding:6px 12px;
+                        border-radius:20px;
+                        font-size:13px;
+                        font-weight:bold;
+                        margin-left:5px;
+                    ">
+                        Admin
+                    </span>
+                {% else %}
+                    <span style="
+                        background:#3b82f6;
+                        color:white;
+                        padding:6px 12px;
+                        border-radius:20px;
+                        font-size:13px;
+                        font-weight:bold;
+                        margin-left:5px;
+                    ">
+                        User
+                    </span>
+                {% endif %}
+
+            </p>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div style="
+            margin-top:20px;
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+            justify-content:center;
+        ">
+
+            <a href="{% url 'user_update' user.slug %}"
+               class="btn-dark-custom">
+                ✏️ Update
+            </a>
+
+            <a href="{% url 'user_delete' user.slug %}"
+               style="
+                    padding:10px 15px;
+                    background:#ef4444;
+                    color:white;
+                    border-radius:10px;
+                    text-decoration:none;
+                    font-weight:bold;
+               ">
+                🗑️ Delete
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 
-    <a href="{% url 'user_update' user.slug %}"
-        style="padding:8px 12px;
-          background:green;
-          color:white;
-          text-decoration:none;
-          border-radius:5px;
-          margin-right:10px;">
-        Update
-    </a>
-
-    <a href="{% url 'user_delete' user.slug %}"
-        style="padding:8px 12px;
-          background:red;
-          color:white;
-          text-decoration:none;
-          border-radius:5px;">
-        Delete
-    </a>
 {% endblock %}
-

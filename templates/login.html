@@ -2,19 +2,56 @@
 
 {% block content %}
 
-<h1>Login</h1>
+<div style="
+    max-width:450px;
+    margin:60px auto;
+">
 
-<form method="post">
-    {% csrf_token %}
+    <div class="dark-card">
 
-    {{ form.as_p }}
+        <h1 style="
+            text-align:center;
+            margin-bottom:10px;
+            font-weight:bold;
+        ">
+            🔐 Login
+        </h1>
 
-    <button type="submit">
-        Login
-    </button>
+        <p style="
+            text-align:center;
+            color:#8a8a8a;
+            margin-bottom:25px;
+        ">
+            Welcome back 👋 Please login to your account
+        </p>
 
-</form>
+        <form method="post">
 
-<h1>LOGIN PAGE WORKS</h1>
+            {% csrf_token %}
+
+            <div style="margin-bottom:15px;">
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit" class="btn-dark-custom" style="width:100%;">
+                Login →
+            </button>
+
+        </form>
+
+        <hr>
+
+        <p style="
+            text-align:center;
+            color:#666;
+            margin:0;
+            font-size:14px;
+        ">
+            Login page ishlayapti ✅ / Login system ready
+        </p>
+
+    </div>
+
+</div>
 
 {% endblock %}

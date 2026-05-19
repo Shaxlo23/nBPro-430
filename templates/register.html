@@ -2,19 +2,55 @@
 
 {% block content %}
 
-<div class="container mt-4">
+<div style="
+    max-width:500px;
+    margin:60px auto;
+">
 
-    <h1>Register</h1>
+    <div class="dark-card">
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+        <h1 style="
+            text-align:center;
+            margin-bottom:10px;
+            font-weight:bold;
+        ">
+            📝 Register
+        </h1>
 
-        {{ form.as_p }}
+        <p style="
+            text-align:center;
+            color:#8a8a8a;
+            margin-bottom:20px;
+        ">
+            Create account | Ro‘yxatdan o‘tish
+        </p>
 
-        <button class="btn btn-primary" type="submit">
-            Register
-        </button>
-    </form>
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div style="margin-bottom:15px;">
+                {{ form.as_p }}
+            </div>
+
+            <button type="submit" class="btn-dark-custom" style="width:100%;">
+                Register →
+            </button>
+
+        </form>
+
+        <hr style="border-color:#2a2a2a;">
+
+        <p style="
+            text-align:center;
+            color:#666;
+            font-size:14px;
+            margin:0;
+        ">
+            Already have account? Login qil 😎
+        </p>
+
+    </div>
 
 </div>
 

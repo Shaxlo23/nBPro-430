@@ -2,28 +2,144 @@
 
 {% block content %}
 
-    <hr>
+<div style="max-width:1000px; margin:40px auto;">
 
-    {% for user in users %}
-        <div style="border:1px solid black; margin:10px; padding:10px;">
-            
-            <h3>
-                <a href="{% url 'user_view' user.slug %}">
-                    {{ user.email }}
-                </a>
-            </h3>
+    <div class="dark-card">
 
-            {% if user.avatar %}
-                <img src="{{ user.avatar.url }}" width="150px">
-            {% endif %}
+        <h1 style="
+            text-align:center;
+            margin-bottom:10px;
+            font-weight:bold;
+        ">
+            👥 Users List
+        </h1>
 
-            <p>Phone: {{ user.phone_number }}</p>
-            <hr>
-            <p>Slug: {{ user.slug }}</p>
-            <hr>
-            <p>Created at: {{ user.created_at }}</p>
-            <hr>
+        <p style="
+            text-align:center;
+            color:#8a8a8a;
+            margin-bottom:25px;
+        ">
+            All registered users | Barcha userlar
+        </p>
 
-        </div>
-    {% endfor %}
+        {% if users %}
+
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+                gap:20px;
+            ">
+
+                {% for user in users %}
+
+                    <div style="
+                        background:#121212;
+                        border:1px solid #2d2d2d;
+                        border-radius:15px;
+                        padding:20px;
+                        transition:0.3s;
+                    ">
+
+                        <!-- Avatar -->
+                        <div style="text-align:center; margin-bottom:15px;">
+
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar.url }}"
+                                     style="
+                                        width:80px;
+                                        height:80px;
+                                        border-radius:50%;
+                                        object-fit:cover;
+                                        border:2px solid #7c3aed;
+                                     ">
+                            {% else %}
+                                <div style="
+                                    width:80px;
+                                    height:80px;
+                                    margin:auto;
+                                    border-radius:50%;
+                                    background:#7c3aed;
+                                    display:flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    font-weight:bold;
+                                    color:white;
+                                ">
+                                    {{ user.first_name|slice:":1" }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                        <!-- Name -->
+                        <h3 style="
+                            text-align:center;
+                            margin-bottom:10px;
+                            color:white;
+                        ">
+                            <a href="{% url 'user_view' user.slug %}"
+                               style="color:white; text-decoration:none;">
+                                {{ user.first_name }} {{ user.last_name }}
+                            </a>
+                        </h3>
+
+                        <!-- Email -->
+                        <p style="color:#aaa; text-align:center; margin:5px 0;">
+                            {{ user.email }}
+                        </p>
+
+                        <hr style="border-color:#2a2a2a;">
+
+                        <!-- Info -->
+                        <p style="color:#ccc; font-size:13px; margin:5px 0;">
+                            📱 Phone: {{ user.phone_number }}
+                        </p>
+
+                        <p style="color:#ccc; font-size:13px; margin:5px 0;">
+                            🔗 Slug: {{ user.slug }}
+                        </p>
+
+                        <p style="color:#ccc; font-size:13px; margin:5px 0;">
+                            📅 Created: {{ user.created_at }}
+                        </p>
+
+                        <!-- WEBSITE (if exists) -->
+                        {% if user.website %}
+                        <p style="color:#ccc; font-size:13px; margin:5px 0;">
+                            🌐 Website:
+                            <a href="{{ user.website }}" target="_blank" style="color:#7c3aed;">
+                                Visit
+                            </a>
+                        </p>
+                        {% endif %}
+
+                        <!-- BIO (short preview) -->
+                        {% if user.bio %}
+                        <p style="
+                            color:#888;
+                            font-size:13px;
+                            margin-top:10px;
+                        ">
+                            {{ user.bio|truncatechars:60 }}
+                        </p>
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p style="text-align:center; color:#777;">
+                No users found 😶
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
 {% endblock %}

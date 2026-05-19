@@ -1,64 +1,99 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-<body style="font-family:Arial; background:#f4f4f4;">
 
-    <h1 style="text-align:center;">Create User</h1>
+<div style="
+    max-width:520px;
+    margin:60px auto;
+">
 
-    <form method="post" enctype="multipart/form-data"
-          style="width:350px;
-                 margin:auto;
-                 background:white;
-                 padding:20px;
-                 border-radius:10px;
-                 box-shadow:0px 0px 10px rgba(0,0,0,0.1);">
+    <div class="dark-card">
 
-        {% csrf_token %}
+        <h1 style="
+            text-align:center;
+            margin-bottom:10px;
+            font-weight:bold;
+        ">
+            ➕ Create User
+        </h1>
 
-        <label>First Name:</label>
-        <br>
-        <input type="text" name="first_name"
-               style="width:100%; padding:8px; margin-top:5px;">
-        <br><br>
+        <p style="
+            text-align:center;
+            color:#8a8a8a;
+            margin-bottom:20px;
+        ">
+            Add new user | Yangi user qo‘shish
+        </p>
 
-        <label>Last Name:</label>
-        <br>
-        <input type="text" name="last_name"
-               style="width:100%; padding:8px; margin-top:5px;">
-        <br><br>
+        <form method="post" enctype="multipart/form-data">
 
-        <label>Email:</label>
-        <br>
-        <input type="email" name="email"
-               style="width:100%; padding:8px; margin-top:5px;">
-        <br><br>
+            {% csrf_token %}
 
-        <label>Avatar:</label>
-        <br>
-        <input type="file" name="avatar"
-               style="margin-top:5px;">
-        <br><br>
+            <label style="color:#ccc;">First Name</label>
+            <input type="text" name="first_name"
+                   style="
+                        width:100%;
+                        padding:10px;
+                        margin:8px 0 15px 0;
+                        border-radius:10px;
+                        border:1px solid #2d2d2d;
+                        background:#121212;
+                        color:white;
+                   ">
 
-        <label>Phone Number:</label>
-        <br>
-        <input type="text" name="phone_number"
-               style="width:100%; padding:8px; margin-top:5px;">
-        <br><br>
+            <label style="color:#ccc;">Last Name</label>
+            <input type="text" name="last_name"
+                   style="
+                        width:100%;
+                        padding:10px;
+                        margin:8px 0 15px 0;
+                        border-radius:10px;
+                        border:1px solid #2d2d2d;
+                        background:#121212;
+                        color:white;
+                   ">
 
-        <button type="submit"
-                style="width:100%;
-                       padding:10px;
-                       background:black;
-                       color:white;
-                       border:none;
-                       border-radius:5px;
-                       cursor:pointer;">
+            <label style="color:#ccc;">Email</label>
+            <input type="email" name="email"
+                   style="
+                        width:100%;
+                        padding:10px;
+                        margin:8px 0 15px 0;
+                        border-radius:10px;
+                        border:1px solid #2d2d2d;
+                        background:#121212;
+                        color:white;
+                   ">
 
-            Create User
+            <label style="color:#ccc;">Phone Number</label>
+            <input type="text" name="phone_number"
+                   style="
+                        width:100%;
+                        padding:10px;
+                        margin:8px 0 15px 0;
+                        border-radius:10px;
+                        border:1px solid #2d2d2d;
+                        background:#121212;
+                        color:white;
+                   ">
 
-        </button>
+            <label style="color:#ccc;">Avatar</label>
+            <input type="file" name="avatar"
+                   style="
+                        margin:10px 0 20px 0;
+                        color:#aaa;
+                   ">
 
-    </form>
+            <button type="submit"
+                    class="btn-dark-custom"
+                    style="width:100%;">
+                🚀 Create User
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
 {% endblock %}

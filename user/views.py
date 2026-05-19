@@ -99,60 +99,62 @@ def register_view(request):
     return render(request,'register.html', {'form':form})
 
 
-#     LOGIN
+# #     LOGIN
 
-def login_view(request):
+# def login_view(request):
 
-    form = LoginForm()
+#     form = LoginForm()
 
-    if request.method == 'POST':
+#     if request.method == 'POST':
 
-        form = LoginForm(
-            request,
-            data = request.POST
-        )        
+#         form = LoginForm(
+#             request,
+#             data = request.POST
+#         )        
 
 
-        if form.is_valid():
+#         if form.is_valid():
 
-            email = form.cleaned_data.get('username')
+#             email = form.cleaned_data.get('username')
 
-            password = form.cleaned_data.get('password')
+#             password = form.cleaned_data.get('password')
 
-            user = authenticate(
-                request,
-                email = email,
-                password = password
-            )
+#             user = authenticate(
+#                 request,
+#                 email = email,
+#                 password = password
+#             )
 
-            if user is not None:
+#             if user is not None:
 
-                login(request,user)
+#                 login(request,user)
 
-                return redirect('home_view')
+#                 return redirect('home_view')
             
-    context = {
-        'form' : form
-    }
+#     context = {
+#         'form' : form
+#     }
 
-    return render(
-        request, 'login.html',context
-    )
+#     return render(
+#         request, 'login.html',context
+#     )
 
-#     LOGOUTTT
+# #     LOGOUTTT
 
-def logout_view(request):
+# def logout_view(request):
 
-    logout(request)
+#     logout(request)
 
-    return redirect('login')
+#     return redirect('login')
 
 
 
 @login_required
 def profile_view(request):
-    context = {
-        'user': request.user
-    }
+    profile = request.user.profile
 
+    context = {
+        'user': request.user,
+        'profile': profile,
+    }
     return render(request,'profile.html',context)

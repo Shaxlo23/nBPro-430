@@ -2,82 +2,147 @@
 
 {% block content %}
 
-<div style="
-    max-width:500px;
-    margin:40px auto;
-    padding:20px;
-    border:1px solid #ddd;
-    border-radius:10px;
-">
+<div style="max-width:520px; margin:50px auto;">
 
-    <h1 style="text-align:center; margin-bottom:20px;">
-        My Profile
-    </h1>
+    <div class="dark-card">
 
-    {% if user.avatar %}
-        <div style="text-align:center;">
-            <img src="{{ user.avatar.url }}"
-                 alt="avatar"
-                 style="
-                    width:150px;
-                    height:150px;
-                    object-fit:cover;
+        <!-- TITLE -->
+        <h1 style="
+            text-align:center;
+            margin-bottom:10px;
+            font-weight:bold;
+        ">
+            👤 My Profile
+        </h1>
+
+        <p style="
+            text-align:center;
+            color:#8a8a8a;
+            margin-bottom:20px;
+        ">
+            Profil info | Account details & settings
+        </p>
+
+        <!-- AVATAR -->
+        <div style="text-align:center; margin-bottom:20px;">
+
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}"
+                     alt="avatar"
+                     style="
+                        width:140px;
+                        height:140px;
+                        object-fit:cover;
+                        border-radius:50%;
+                        border:3px solid #7c3aed;
+                     ">
+            {% else %}
+                <div style="
+                    width:140px;
+                    height:140px;
+                    margin:0 auto;
                     border-radius:50%;
-                 ">
+                    background:#7c3aed;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:40px;
+                    font-weight:bold;
+                    color:white;
+                ">
+                    {{ user.first_name|slice:":1" }}
+                </div>
+            {% endif %}
+
         </div>
-    {% endif %}
 
-    <div style="margin-top:20px;">
+        <!-- INFO BOX -->
+        <div style="
+            background:#121212;
+            border:1px solid #2d2d2d;
+            border-radius:15px;
+            padding:15px;
+        ">
 
-        <p>
-            <strong>First Name:</strong>
-            {{ user.first_name }}
-        </p>
+            <p style="margin:8px 0; color:#ccc;">
+                <strong style="color:white;">First Name:</strong>
+                {{ user.first_name }}
+            </p>
 
-        <p>
-            <strong>Last Name:</strong>
-            {{ user.last_name }}
-        </p>
+            <p style="margin:8px 0; color:#ccc;">
+                <strong style="color:white;">Last Name:</strong>
+                {{ user.last_name }}
+            </p>
 
-        <p>
-            <strong>Email:</strong>
-            {{ user.email }}
-        </p>
+            <p style="margin:8px 0; color:#ccc;">
+                <strong style="color:white;">Email:</strong>
+                {{ user.email }}
+            </p>
 
-        <p>
-            <strong>Phone Number:</strong>
-            {{ user.phone_number }}
-        </p>
+            <p style="margin:8px 0; color:#ccc;">
+                <strong style="color:white;">Phone:</strong>
+                {{ user.phone_number }}
+            </p>
 
-    </div>
+            <!-- WEBSITE -->
+            <p style="margin:8px 0; color:#ccc;">
+                <strong style="color:white;">Website:</strong>
 
-    <div style="
-        margin-top:20px;
-        display:flex;
-        gap:10px;
-    ">
+                {% if user.website %}
+                    <a href="{{ user.website }}" target="_blank" style="color:#7c3aed;">
+                        {{ user.website }}
+                    </a>
+                {% else %}
+                    <span style="color:#777;">No website</span>
+                {% endif %}
+            </p>
 
-        <a href="{% url 'user_update' user.slug %}"
-           style="
-                padding:10px 15px;
-                background:blue;
-                color:white;
-                text-decoration:none;
-                border-radius:5px;
-           ">
-            Edit Profile
-        </a>
+            <!-- BIO -->
+            <p style="margin:8px 0; color:#ccc;">
+                <strong style="color:white;">Bio:</strong><br>
 
-        <a href="{% url 'logout' %}"
-           style="
-                padding:10px 15px;
-                background:red;
-                color:white;
-                text-decoration:none;
-                border-radius:5px;
-           ">
-            Logout
-        </a>
+                {% if user.bio %}
+                    <span style="color:#aaa;">{{ user.bio }}</span>
+                {% else %}
+                    <span style="color:#777;">No bio yet</span>
+                {% endif %}
+            </p>
+
+        </div>
+
+        <!-- BUTTONS -->
+        <div style="
+            margin-top:20px;
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+            justify-content:center;
+        ">
+
+            <a href="{% url 'user_update' user.slug %}"
+               class="btn-dark-custom">
+                ✏️ Edit Profile
+            </a>
+
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+
+                <button type="submit"
+                        style="
+                            padding:10px 15px;
+                            background:#ef4444;
+                            color:white;
+                            border:none;
+                            border-radius:10px;
+                            cursor:pointer;
+                            font-weight:bold;
+                        ">
+                    Logout
+                </button>
+
+            </form>
+
+        </div>
 
     </div>
 

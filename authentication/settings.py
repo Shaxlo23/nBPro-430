@@ -137,7 +137,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 
 LOGIN_URL = 'login'  #ozm yozdm
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home_view'
 LOGOUT_REDIRECT_URL = 'login' #ozm yozdm
 
 #   AuthenticationForm --> userning kirish-chiqishi

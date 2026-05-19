@@ -2,35 +2,204 @@
 
 {% block content %}
 
-<div style="padding: 20px;">
+<div class="dark-card">
 
-    <h1>🏠 Home Page</h1>
-    <p>Welcome to the home page!</p>
+    <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        flex-wrap:wrap;
+        gap:15px;
+        margin-bottom:25px;
+    ">
+
+        <div>
+
+            <h1 style="
+                font-size:42px;
+                font-weight:bold;
+                margin-bottom:10px;
+            ">
+                🏠 Home Page
+            </h1>
+
+            <p style="
+                color:#a1a1aa;
+                font-size:18px;
+                margin:0;
+            ">
+                Welcome back 👋 Bu yerda barcha users ko‘rinadi.
+            </p>
+
+        </div>
+
+        <div style="
+            background:#121212;
+            border:1px solid #2e2e2e;
+            padding:15px 20px;
+            border-radius:15px;
+            min-width:220px;
+        ">
+
+            <p style="
+                margin:0;
+                color:#888;
+                font-size:14px;
+            ">
+                🌐 Website
+            </p>
+
+            <h5 style="
+                margin-top:5px;
+                color:white;
+            ">
+                myproject.com
+            </h5>
+
+        </div>
+
+    </div>
 
     <hr>
 
-    <h2>👥 Users List</h2>
+    <div style="
+        margin-top:30px;
+        margin-bottom:25px;
+    ">
+
+        <h2 style="
+            font-weight:bold;
+            margin-bottom:10px;
+        ">
+            👥 Users List
+        </h2>
+
+        <p style="
+            color:#8d8d8d;
+        ">
+            User ustiga bossangiz profile, bio va website chiqadi.
+        </p>
+
+    </div>
 
     {% if users %}
-        <ul>
+
+        <div style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+            gap:20px;
+        ">
+
             {% for user in users %}
 
-                {% if user.slug %}
-                    <li>
-                        <a href="{% url 'user_view' user.slug %}">
-                            {{ user.first_name }} {{ user.last_name }}
+                <div style="
+                    background:#141414;
+                    border:1px solid #2d2d2d;
+                    border-radius:18px;
+                    padding:20px;
+                    transition:0.3s;
+                ">
+
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        gap:15px;
+                        margin-bottom:15px;
+                    ">
+
+                        <div style="
+                            width:55px;
+                            height:55px;
+                            border-radius:50%;
+                            background:#7c3aed;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-size:20px;
+                            font-weight:bold;
+                        ">
+                            {{ user.first_name|slice:":1" }}
+                        </div>
+
+                        <div>
+
+                            <h5 style="
+                                margin:0;
+                                color:white;
+                                font-weight:bold;
+                            ">
+                                {{ user.first_name }} {{ user.last_name }}
+                            </h5>
+
+                            <p style="
+                                margin:0;
+                                color:#777;
+                                font-size:14px;
+                            ">
+                                Active User
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <p style="
+                        color:#9b9b9b;
+                        font-size:14px;
+                        margin-bottom:20px;
+                    ">
+                        Bu user haqida bio va website info profile page ichida bo‘ladi.
+                    </p>
+
+                    {% if user.slug %}
+
+                        <a href="{% url 'user_view' user.slug %}"
+                           class="btn-dark-custom">
+                            View Profile →
                         </a>
-                    </li>
-                {% else %}
-                    <li>
-                        {{ user.first_name }} {{ user.last_name }} (no slug)
-                    </li>
-                {% endif %}
+
+                    {% else %}
+
+                        <span style="
+                            color:#777;
+                        ">
+                            Slug topilmadi
+                        </span>
+
+                    {% endif %}
+
+                </div>
 
             {% endfor %}
-        </ul>
+
+        </div>
+
     {% else %}
-        <p>No users found.</p>
+
+        <div style="
+            background:#151515;
+            border:1px solid #2c2c2c;
+            border-radius:15px;
+            padding:25px;
+            text-align:center;
+        ">
+
+            <h4 style="
+                color:white;
+                margin-bottom:10px;
+            ">
+                No users found 😶
+            </h4>
+
+            <p style="
+                color:#888;
+                margin:0;
+            ">
+                Hozircha userlar yo‘q.
+            </p>
+
+        </div>
+
     {% endif %}
 
 </div>

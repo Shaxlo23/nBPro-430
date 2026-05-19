@@ -29,6 +29,9 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name','last_name']
 
+
+    bio=models.TextField(blank=True)
+    website = models.URLField(blank=True)
     phone_number=models.CharField(max_length=30,blank=False,null=False)
     avatar=models.ImageField(upload_to='images/',default='images/default.jpg',blank=True,null=False)
     slug=models.SlugField(blank=True, null=False,unique=True)
@@ -44,3 +47,34 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+
+
+#    USER PROFILE
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='profile'
+    )
+    bio = models.TextField(blank=True)
+    website = models.URLField(blank=True)
+
+
+    def __str__(self):
+        return f"{self.user.email} - Profile"
+    
+
+#SIGNAL: user yaratilganda avtomatik profile yaratadi
+
+@receiver(post_save, sender=CustomUser)
+def create_user_profile(sender,instance,created,**kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+    
+@receiver(post_save,sender=CustomUser)
+def save_user_profile(sender,instance,**kwargs):
+    instance.profile.save()
