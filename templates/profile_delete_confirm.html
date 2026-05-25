@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="dark-card">
+
+    <div style="
+        max-width:700px;
+        margin:0 auto;
+    ">
+
+        <div style="
+            background:#141414;
+            border:1px solid #2d2d2d;
+            border-radius:22px;
+            padding:40px;
+            text-align:center;
+        ">
+
+            <div style="
+                width:100px;
+                height:100px;
+                margin:0 auto 25px auto;
+                border-radius:50%;
+                background:#2a1111;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                font-size:45px;
+                border:2px solid #5c1f1f;
+            ">
+                ⚠️
+            </div>
+
+            <h1 style="
+                color:white;
+                font-size:38px;
+                font-weight:bold;
+                margin-bottom:15px;
+            ">
+                Delete Profile?
+            </h1>
+
+            <p style="
+                color:#9a9a9a;
+                font-size:17px;
+                line-height:1.7;
+                max-width:500px;
+                margin:0 auto 35px auto;
+            ">
+                Sizning accountingiz va profile ma’lumotlaringiz
+                butunlay o‘chiriladi. Bu amalni qaytarib bo‘lmaydi.
+            </p>
+
+            <div style="
+                background:#101010;
+                border:1px solid #252525;
+                border-radius:16px;
+                padding:20px;
+                margin-bottom:35px;
+                text-align:left;
+            ">
+
+                <h4 style="
+                    color:white;
+                    margin-bottom:15px;
+                ">
+                    👤 Account Info
+                </h4>
+
+                <p style="
+                    color:#b0b0b0;
+                    margin-bottom:8px;
+                ">
+                    <strong>Name:</strong>
+                    {{ request.user.first_name }}
+                    {{ request.user.last_name }}
+                </p>
+
+                <p style="
+                    color:#b0b0b0;
+                    margin:0;
+                ">
+                    <strong>Email:</strong>
+                    {{ request.user.email }}
+                </p>
+
+            </div>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div style="
+                    display:flex;
+                    justify-content:center;
+                    gap:15px;
+                    flex-wrap:wrap;
+                ">
+
+                    <a href="{% url 'profile' %}"
+                       style="
+                            background:#1f1f1f;
+                            border:1px solid #343434;
+                            color:white;
+                            padding:12px 26px;
+                            border-radius:12px;
+                            text-decoration:none;
+                            font-weight:bold;
+                       ">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            style="
+                                background:#dc2626;
+                                border:none;
+                                color:white;
+                                padding:12px 26px;
+                                border-radius:12px;
+                                font-weight:bold;
+                                cursor:pointer;
+                            ">
+
+                        Delete Account 🗑️
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

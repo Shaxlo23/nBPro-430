@@ -29,9 +29,6 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name','last_name']
 
-
-    bio=models.TextField(blank=True)
-    website = models.URLField(blank=True)
     phone_number=models.CharField(max_length=30,blank=False,null=False)
     avatar=models.ImageField(upload_to='images/',default='images/default.jpg',blank=True,null=False)
     slug=models.SlugField(blank=True, null=False,unique=True)

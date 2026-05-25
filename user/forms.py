@@ -5,7 +5,7 @@ from django.contrib.auth.forms import (
 )
 
 
-from .models import CustomUser
+from .models import CustomUser,UserProfile   
 
 #     RRGISTER FORM
 
@@ -36,3 +36,73 @@ class LoginForm(AuthenticationForm):
     )
 
 
+class ProfileUpdateForm(forms.ModelForm):
+    """
+    CustomUser modelidagi ma'lumotlarni tahrirlash uchun form
+    """
+
+    first_name= forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Ismingiz'
+        })
+    )
+
+    last_name=forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Familiyangiz'
+        })
+    )
+
+    phone_number=forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class':'form-input',
+            'placeholder': '+998 94 136 52 92'
+        })
+    )
+
+    avatar=forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class':'form-file',
+            'accept':'image/*'
+        }) 
+        )
+
+
+    class Meta:
+        model = CustomUser
+        fields= ['first_name','last_name','phone_number','avatar']
+
+
+
+class UserProfileUpdateForm(forms.ModelForm):
+    """
+    UserProfile modelidagi ma'lumotlarni tahrirlsh uchun form
+    """
+
+    bio = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class':'form-input',
+            'placeholder':'O\'zingiz haqida yozing...',
+            'rows': 4
+        })
+    )
+
+    website = forms.URLField(
+        required=False,
+        widget=forms.URLInput(attrs={
+            'class':'form-input',
+            'placeholder':'https://example.com',
+        })
+    )
+
+    class Meta:
+        model = UserProfile
+        fields = ['bio','website']

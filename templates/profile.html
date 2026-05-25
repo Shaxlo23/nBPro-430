@@ -7,19 +7,11 @@
     <div class="dark-card">
 
         <!-- TITLE -->
-        <h1 style="
-            text-align:center;
-            margin-bottom:10px;
-            font-weight:bold;
-        ">
+        <h1 style="text-align:center; margin-bottom:10px; font-weight:bold;">
             👤 My Profile
         </h1>
 
-        <p style="
-            text-align:center;
-            color:#8a8a8a;
-            margin-bottom:20px;
-        ">
+        <p style="text-align:center; color:#8a8a8a; margin-bottom:20px;">
             Profil info | Account details & settings
         </p>
 
@@ -84,25 +76,25 @@
                 {{ user.phone_number }}
             </p>
 
-            <!-- WEBSITE -->
+            <!-- WEBSITE (FIXED) -->
             <p style="margin:8px 0; color:#ccc;">
                 <strong style="color:white;">Website:</strong>
 
-                {% if user.website %}
-                    <a href="{{ user.website }}" target="_blank" style="color:#7c3aed;">
-                        {{ user.website }}
+                {% if profile.website %}
+                    <a href="{{ profile.website }}" target="_blank" style="color:#7c3aed;">
+                        {{ profile.website }}
                     </a>
                 {% else %}
                     <span style="color:#777;">No website</span>
                 {% endif %}
             </p>
 
-            <!-- BIO -->
+            <!-- BIO (FIXED) -->
             <p style="margin:8px 0; color:#ccc;">
                 <strong style="color:white;">Bio:</strong><br>
 
-                {% if user.bio %}
-                    <span style="color:#aaa;">{{ user.bio }}</span>
+                {% if profile.bio %}
+                    <span style="color:#aaa;">{{ profile.bio }}</span>
                 {% else %}
                     <span style="color:#777;">No bio yet</span>
                 {% endif %}
@@ -119,7 +111,7 @@
             justify-content:center;
         ">
 
-            <a href="{% url 'user_update' user.slug %}"
+            <a href="{% url 'profile_edit' %}"
                class="btn-dark-custom">
                 ✏️ Edit Profile
             </a>
