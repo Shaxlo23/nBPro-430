@@ -3,14 +3,14 @@ from django.contrib.auth import get_user_model,login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 import uuid
-
+from .models import Post
 from . import models
 from .forms import RegisterForm,LoginForm,UserProfileUpdateForm,ProfileUpdateForm
 
 # Create your views here.
 
 User = get_user_model()
-
+#            USER CRUDDDDD
 #read
 def users_view(request):
     users = User.objects.all()
@@ -160,7 +160,7 @@ def register_view(request):
 
 #------------------------------------------------------------------------------------------------
 
-
+#               PROFILE CRUUUUUUUUD
 
 #           READ
 @login_required
@@ -227,3 +227,15 @@ def profile_delete_view(request):
         return redirect('register')
 
     return render(request,'profile_delete_confirm.html')
+
+
+
+#             POST CRUUUUDD
+def posts_list(request):
+    posts=Post.objects.select_related('author').all()
+    return render(request,'post_list.html',{'posts':posts})
+
+def post_detail(request,slug):
+    post=get_object_or_404(Post,slug=slug)
+    return render(request,'post_detail.html',{'post':post})
+

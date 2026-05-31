@@ -12,14 +12,14 @@
             margin-bottom:15px;
             font-weight:bold;
         ">
-            {{ user_obj.first_name }} {{ user_obj.last_name }}
+            {{ user.first_name }} {{ user.last_name }}
         </h2>
 
         <!-- AVATAR -->
         <div style="text-align:center; margin-bottom:20px;">
 
-            {% if user_obj.avatar %}
-                <img src="{{ user_obj.avatar.url }}"
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}"
                      style="
                         width:160px;
                         height:160px;
@@ -41,7 +41,7 @@
                     font-weight:bold;
                     color:white;
                 ">
-                    {{ user_obj.first_name|slice:":1" }}
+                    {{ user.first_name|slice:":1" }}
                 </div>
             {% endif %}
 
@@ -56,46 +56,43 @@
         ">
 
             <p style="margin:8px 0; color:#ccc;">
-                <b style="color:white;">Email:</b> {{ user_obj.email }}
+                <b style="color:white;">Email:</b> {{ user.email }}
             </p>
 
             <p style="margin:8px 0; color:#ccc;">
-                <b style="color:white;">Phone:</b> {{ user_obj.phone_number }}
+                <b style="color:white;">Phone:</b> {{ user.phone_number }}
             </p>
 
             <p style="margin:8px 0; color:#ccc;">
-                <b style="color:white;">Created At:</b> {{ user_obj.created_at }}
+                <b style="color:white;">Created At:</b> {{ user.created_at }}
             </p>
 
-            <!-- WEBSITE -->
             <p style="margin:8px 0; color:#ccc;">
                 <b style="color:white;">Website:</b>
 
-                {% if user_obj.profile.website %}
-                    <a href="{{ user_obj.profile.website }}" target="_blank" style="color:#7c3aed;">
-                        {{ user_obj.profile.website }}
+                {% if user.profile.website %}
+                    <a href="{{ user.profile.website }}" target="_blank" style="color:#7c3aed;">
+                        {{ user.profile.website }}
                     </a>
                 {% else %}
                     <span style="color:#777;">No website</span>
                 {% endif %}
             </p>
 
-            <!-- BIO -->
             <p style="margin:8px 0; color:#ccc;">
                 <b style="color:white;">Bio:</b><br>
 
-                {% if user_obj.profile.bio %}
-                    <span style="color:#aaa;">{{ user_obj.profile.bio }}</span>
+                {% if user.profile.bio %}
+                    <span style="color:#aaa;">{{ user.profile.bio }}</span>
                 {% else %}
                     <span style="color:#777;">No bio yet</span>
                 {% endif %}
             </p>
 
-            <!-- ROLE -->
             <p style="margin:8px 0; color:#ccc;">
                 <b style="color:white;">Role:</b>
 
-                {% if user_obj.is_superuser %}
+                {% if user.is_superuser %}
                     <span style="
                         background:#ef4444;
                         color:white;
@@ -134,22 +131,26 @@
             justify-content:center;
         ">
 
-            <a href="{% url 'user_update' user_obj.slug %}"
-               class="btn-dark-custom">
-                ✏️ Update
-            </a>
+            {% if user.slug %}
 
-            <a href="{% url 'user_delete' user_obj.slug %}"
-               style="
-                    padding:10px 15px;
-                    background:#ef4444;
-                    color:white;
-                    border-radius:10px;
-                    text-decoration:none;
-                    font-weight:bold;
-               ">
-                🗑️ Delete
-            </a>
+                <a href="{% url 'user_update' user.slug %}"
+                   class="btn-dark-custom">
+                    ✏️ Update
+                </a>
+
+                <a href="{% url 'user_delete' user.slug %}"
+                   style="
+                        padding:10px 15px;
+                        background:#ef4444;
+                        color:white;
+                        border-radius:10px;
+                        text-decoration:none;
+                        font-weight:bold;
+                   ">
+                    🗑️ Delete
+                </a>
+
+            {% endif %}
 
         </div>
 

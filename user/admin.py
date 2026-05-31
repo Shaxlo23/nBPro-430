@@ -15,3 +15,4 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.UserProfile)
+admin.site.register(models.Post)

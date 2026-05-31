@@ -18,4 +18,6 @@ urlpatterns = [
     path('profile/', views.profile_view,name='profile'),
     path('profile/edit/', views.profile_edit_view,name='profile_edit'),
     path('profile/delete/', views.profile_delete_view,name='profile_delete'),
+    path('posts/',views.posts_list,name='post_list'),
+    path('posts/<slug:slug>/',views.post_detail,name='post_detail')
 ]
