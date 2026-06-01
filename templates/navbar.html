@@ -2,100 +2,110 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:15px 25px;
-    background:#0f0f0f;
-    border-bottom:1px solid #2a2a2a;
-    font-family:Arial, Helvetica, sans-serif;
+    padding:16px 32px;
+    background:rgba(15,15,15,0.85);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
     position:sticky;
     top:0;
     z-index:1000;
 ">
 
     <!-- Logo -->
-    <h1 style="margin:0;">
-        <a href="{% url 'home_view' %}" style="
-            text-decoration:none;
-            color:white;
-            font-weight:bold;
-            letter-spacing:1px;
-        ">
-            ⚡ My App
-        </a>
-    </h1>
+    <a href="{% url 'home_view' %}" style="
+        text-decoration:none;
+        font-size:26px;
+        font-weight:800;
+        color:white;
+        letter-spacing:1px;
+    ">
+        ⚡ My App
+    </a>
 
-    <!-- Menu -->
+    <!-- Navigation -->
     <div style="
         display:flex;
-        gap:10px;
         align-items:center;
-        flex-wrap:wrap;
+        gap:12px;
     ">
 
-        <a href="{% url 'user_create' %}"
-           style="
-              padding:8px 14px;
-              background:#1f1f1f;
-              color:white;
-              text-decoration:none;
-              border-radius:10px;
-              border:1px solid #2d2d2d;
-              transition:0.3s;
-           ">
-            + Create User
+        <a href="{% url 'user_create' %}" style="
+            text-decoration:none;
+            color:#d4d4d8;
+            background:#18181b;
+            padding:10px 16px;
+            border-radius:12px;
+            border:1px solid #27272a;
+            transition:.3s;
+        ">
+            + User
+        </a>
+
+        <a href="{% url 'post_list' %}" style="
+            text-decoration:none;
+            color:#d4d4d8;
+            background:#18181b;
+            padding:10px 16px;
+            border-radius:12px;
+            border:1px solid #27272a;
+            transition:.3s;
+        ">
+            📝 Posts
         </a>
 
         {% if user.is_authenticated %}
 
-            <a href="{% url 'profile' %}"
-               style="
-                  padding:8px 14px;
-                  background:#7c3aed;
-                  color:white;
-                  text-decoration:none;
-                  border-radius:10px;
-                  transition:0.3s;
-               ">
+            <a href="{% url 'profile' %}" style="
+                text-decoration:none;
+                color:white;
+                background:linear-gradient(135deg,#7c3aed,#a855f7);
+                padding:10px 16px;
+                border-radius:12px;
+                font-weight:600;
+                box-shadow:0 0 20px rgba(124,58,237,.35);
+            ">
                 👤 Profile
             </a>
 
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            <form action="{% url 'logout' %}" method="post" style="margin:0;">
                 {% csrf_token %}
-
-                <button type="submit"
-                    style="
-                        padding:8px 14px;
-                        background:#ef4444;
-                        color:white;
-                        border:none;
-                        border-radius:10px;
-                        cursor:pointer;
-                        transition:0.3s;
-                    ">
+                <button type="submit" style="
+                    padding:10px 16px;
+                    border:none;
+                    border-radius:12px;
+                    background:linear-gradient(135deg,#dc2626,#ef4444);
+                    color:white;
+                    cursor:pointer;
+                    font-weight:600;
+                    box-shadow:0 0 18px rgba(239,68,68,.25);
+                ">
                     Logout
                 </button>
             </form>
 
         {% else %}
 
-            <a href="{% url 'login' %}"
-               style="
-                  padding:8px 14px;
-                  background:#2563eb;
-                  color:white;
-                  text-decoration:none;
-                  border-radius:10px;
-               ">
+            <a href="{% url 'login' %}" style="
+                text-decoration:none;
+                color:white;
+                background:linear-gradient(135deg,#2563eb,#3b82f6);
+                padding:10px 16px;
+                border-radius:12px;
+                font-weight:600;
+                box-shadow:0 0 18px rgba(59,130,246,.25);
+            ">
                 Login
             </a>
 
-            <a href="{% url 'register' %}"
-               style="
-                  padding:8px 14px;
-                  background:#16a34a;
-                  color:white;
-                  text-decoration:none;
-                  border-radius:10px;
-               ">
+            <a href="{% url 'register' %}" style="
+                text-decoration:none;
+                color:white;
+                background:linear-gradient(135deg,#16a34a,#22c55e);
+                padding:10px 16px;
+                border-radius:12px;
+                font-weight:600;
+                box-shadow:0 0 18px rgba(34,197,94,.25);
+            ">
                 Register
             </a>
 

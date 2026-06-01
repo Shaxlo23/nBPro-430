@@ -1,3 +1,8 @@
 body{
-    background-color: aliceblue;
+    background:
+        radial-gradient(circle at top, rgba(124,58,237,0.18), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(59,130,246,0.12), transparent 30%),
+        #050505;
+
+    color:white;
 }

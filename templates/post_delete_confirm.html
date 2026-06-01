@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+.delete-wrapper {
+    max-width: 600px;
+    margin: 70px auto;
+}
+
+.delete-card {
+    background: rgba(20,20,25,0.7);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 30px;
+
+    backdrop-filter: blur(18px);
+    box-shadow: 0 25px 70px rgba(0,0,0,0.7);
+
+    text-align: center;
+    color: #eaeaea;
+}
+
+.icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 25px;
+}
+
+.post-box {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.post-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.post-content {
+    font-size: 13px;
+    color: #bbb;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-danger-custom {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 0 25px rgba(239,68,68,0.25);
+}
+
+.btn-danger-custom:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(239,68,68,0.4);
+}
+
+.btn-cancel {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-cancel:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+</style>
+
+<div class="delete-wrapper">
+
+    <div class="delete-card">
+
+        <div class="icon">⚠️</div>
+
+        <div class="title">Delete Post?</div>
+        <div class="subtitle">
+            This action cannot be undone. The post will be permanently removed.
+        </div>
+
+        <div class="post-box">
+            <div class="post-title">{{ post.title }}</div>
+            <div class="post-content">
+                {{ post.content|truncatechars:120 }}
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="btn-group">
+
+                <a href="{% url 'post_detail' post.slug %}" class="btn-cancel">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn-danger-custom">
+                    Yes, Delete 🗑️
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

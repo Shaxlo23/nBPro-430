@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .edit-wrapper {
+        max-width: 700px;
+        margin: 50px auto;
+    }
+
+    .edit-card {
+        background: rgba(20,20,25,0.65);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 25px;
+
+        backdrop-filter: blur(18px);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        color: #eaeaea;
+
+        transition: 0.3s;
+    }
+
+    .edit-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 13px;
+        color: #aaa;
+        margin-bottom: 25px;
+    }
+
+    .field {
+        margin-bottom: 18px;
+    }
+
+    .field label {
+        display: block;
+        margin-bottom: 6px;
+        color: #aaa;
+        font-size: 13px;
+    }
+
+    .btn-save {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        border: none;
+
+        background: linear-gradient(135deg, #7c3aed, #2563eb);
+        color: white;
+        font-weight: bold;
+
+        transition: 0.25s;
+        box-shadow: 0 0 25px rgba(124,58,237,0.25);
+    }
+
+    .btn-save:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 40px rgba(124,58,237,0.4);
+    }
+
+    .preview-box {
+        margin-bottom: 20px;
+        padding: 12px;
+        border-radius: 12px;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .preview-box img {
+        width: 100%;
+        border-radius: 12px;
+        margin-top: 10px;
+    }
+
+</style>
+
+<div class="edit-wrapper">
+
+    <div class="edit-card">
+
+        <div class="title">✏️ Edit Post</div>
+        <div class="subtitle">Update your content and keep it fresh</div>
+
+        {% if post.image %}
+        <div class="preview-box">
+            <small style="color:#aaa;">Current Image</small>
+            <img src="{{ post.image.url }}">
+        </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="field">
+                <label>Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="field">
+                <label>Content</label>
+                {{ form.content }}
+            </div>
+
+            <div class="field">
+                <label>Change Image</label>
+                {{ form.image }}
+            </div>
+
+            <button type="submit" class="btn-save">
+                Save Changes ✨
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

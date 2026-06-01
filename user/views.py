@@ -5,7 +5,7 @@ from django.utils.text import slugify
 import uuid
 from .models import Post
 from . import models
-from .forms import RegisterForm,LoginForm,UserProfileUpdateForm,ProfileUpdateForm
+from .forms import RegisterForm,LoginForm,UserProfileUpdateForm,ProfileUpdateForm,PostForm
 
 # Create your views here.
 
@@ -239,3 +239,56 @@ def post_detail(request,slug):
     post=get_object_or_404(Post,slug=slug)
     return render(request,'post_detail.html',{'post':post})
 
+@login_required
+def post_create_view(request):
+    form = PostForm()
+
+    if request.method == 'POST':
+        form = PostForm(request.POST,request.FILES)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            #commit=false - DB ga hali saqlanmaydi
+            post.author = request.user
+            post.save()
+
+            return redirect('post_detail',slug=post.slug)
+        
+        return render(request,'post_create.html',{'form':form}) 
+    
+
+@login_required
+def post_edit_view(request,slug):
+    post = get_object_or_404(Post,slug=slug)
+
+    #faqat oz postini tahrirlay oladi
+    if post.author != request.user:
+        return redirect('post_detail',slug=slug)
+    
+    form = PostForm(instance=post)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST,request.FILES,instance=post)
+        if form.is_valid():
+            form.save()
+
+            return redirect('post_detail',slug=post.slug)
+        
+    return render(request,'post_edit.html',{'form':form,'post':post})
+    
+
+
+@login_required
+def post_delete_view(request,slug):
+    post = get_object_or_404(Post,slug=slug)
+
+    #faqat oz postini ochira oladi
+    if post.author != request.user:
+        return redirect('post_detail',slug=slug)
+    
+    if request.method == 'POST':
+        post.delete()
+
+        return redirect('post_list')
+    
+    return render(request,'post_delete_confirm.html',{'post':post})

@@ -4,60 +4,149 @@
 
 <div style="
     max-width:900px;
-    margin:auto;
-;">
+    margin:50px auto;
+">
 
     <div class="dark-card">
 
+        <!-- IMAGE -->
         {% if post.image %}
             <img 
                 src="{{ post.image.url }}"
                 alt="{{ post.title }}"
                 style="
                     width:100%;
-                    max-height:450px;
+                    max-height:480px;
                     object-fit:cover;
-                    border-radius:15px;
+                    border-radius:16px;
                     margin-bottom:20px;
+                    border:1px solid rgba(255,255,255,0.08);
                 "
             >
         {% endif %}
 
+        <!-- TITLE -->
         <h1 style="
-            font-weight:bold;
-            margin-bottom:15px;
+            font-size:32px;
+            font-weight:700;
+            margin-bottom:10px;
+            letter-spacing:0.5px;
+            color:#fff;
         ">
             {{ post.title }}
         </h1>
 
-        <p style="
-            color:#9b9b9b;
-            margin-bottom:20px;
+        <!-- META -->
+        <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:10px;
+            color:#9a9a9a;
+            font-size:14px;
         ">
-            👤 
-            <a 
-                href="{% url 'user_view' post.author.slug %}"
-                style="
-                    color:#9b9b9b;
+
+            <div>
+                👤
+                <a href="{% url 'user_view' post.author.slug %}" style="
+                    color:#bdbdbd;
                     text-decoration:none;
-                "
-            >
-                {{ post.author.first_name }} {{ post.author.last_name }}
-            </a>
+                    font-weight:500;
+                ">
+                    {{ post.author.first_name }} {{ post.author.last_name }}
+                </a>
 
-            • {{ post.created_at|date:"d M Y" }}
-        </p>
+                • {{ post.created_at|date:"d M Y" }}
+            </div>
 
-        <hr>
+        </div>
 
+        <hr style="margin:20px 0; border-color:rgba(255,255,255,0.08);">
+
+        <!-- CONTENT -->
         <p style="
             line-height:1.9;
-            font-size:18px;
+            font-size:17px;
             color:#d6d6d6;
-            margin-top:20px;
+            white-space:pre-line;
         ">
             {{ post.content }}
         </p>
+
+        <!-- =========================
+             BOTTOM ACTION BAR
+        ========================== -->
+        {% if request.user == post.author %}
+
+        <div style="
+            margin-top:40px;
+            padding-top:20px;
+            border-top:1px solid rgba(255,255,255,0.08);
+
+            display:flex;
+            justify-content:flex-end;
+            gap:12px;
+            align-items:center;
+        ">
+
+            <!-- EDIT BUTTON -->
+            <a href="{% url 'post_edit' post.slug %}" style="
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+
+                padding:10px 18px;
+                border-radius:14px;
+
+                background:rgba(124,58,237,0.12);
+                border:1px solid rgba(124,58,237,0.35);
+                color:#c4b5fd;
+
+                font-weight:600;
+                font-size:14px;
+
+                text-decoration:none;
+
+                transition:0.25s;
+                backdrop-filter: blur(10px);
+            "
+            onmouseover="this.style.transform='translateY(-2px)'"
+            onmouseout="this.style.transform='translateY(0)'"
+            >
+                ✏️ Edit
+            </a>
+
+            <!-- DELETE BUTTON -->
+            <a href="{% url 'post_delete' post.slug %}" style="
+                display:inline-flex;
+                align-items:center;
+                gap:8px;
+
+                padding:10px 18px;
+                border-radius:14px;
+
+                background:rgba(239,68,68,0.12);
+                border:1px solid rgba(239,68,68,0.35);
+                color:#fca5a5;
+
+                font-weight:600;
+                font-size:14px;
+
+                text-decoration:none;
+
+                transition:0.25s;
+                backdrop-filter: blur(10px);
+            "
+            onmouseover="this.style.transform='translateY(-2px)'"
+            onmouseout="this.style.transform='translateY(0)'"
+            >
+                🗑️ Delete
+            </a>
+
+        </div>
+
+        {% endif %}
 
     </div>
 
