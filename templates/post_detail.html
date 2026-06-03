@@ -11,142 +11,202 @@
 
         <!-- IMAGE -->
         {% if post.image %}
-            <img 
+            <img
                 src="{{ post.image.url }}"
                 alt="{{ post.title }}"
                 style="
                     width:100%;
-                    max-height:480px;
+                    max-height:500px;
                     object-fit:cover;
-                    border-radius:16px;
-                    margin-bottom:20px;
-                    border:1px solid rgba(255,255,255,0.08);
+                    border-radius:18px;
+                    margin-bottom:24px;
+                    border:1px solid rgba(255,255,255,.08);
                 "
             >
         {% endif %}
 
         <!-- TITLE -->
         <h1 style="
-            font-size:32px;
-            font-weight:700;
-            margin-bottom:10px;
-            letter-spacing:0.5px;
             color:#fff;
+            font-size:34px;
+            font-weight:700;
+            margin-bottom:12px;
+            line-height:1.3;
         ">
             {{ post.title }}
         </h1>
 
-        <!-- META -->
+        <!-- AUTHOR + DATE -->
         <div style="
             display:flex;
             justify-content:space-between;
             align-items:center;
             flex-wrap:wrap;
             gap:10px;
-            color:#9a9a9a;
+            color:#8d8d8d;
             font-size:14px;
         ">
 
             <div>
                 👤
-                <a href="{% url 'user_view' post.author.slug %}" style="
-                    color:#bdbdbd;
-                    text-decoration:none;
-                    font-weight:500;
-                ">
-                    {{ post.author.first_name }} {{ post.author.last_name }}
+
+                <a
+                    href="{% url 'user_view' post.author.slug %}"
+                    style="
+                        color:#d0d0d0;
+                        text-decoration:none;
+                        font-weight:600;
+                    "
+                >
+                    {{ post.author.first_name }}
+                    {{ post.author.last_name }}
                 </a>
 
                 • {{ post.created_at|date:"d M Y" }}
+
             </div>
+
+            {% if post.updated_at != post.created_at %}
+            <div>
+                Updated:
+                {{ post.updated_at|date:"d M Y" }}
+            </div>
+            {% endif %}
 
         </div>
 
-        <hr style="margin:20px 0; border-color:rgba(255,255,255,0.08);">
+        <hr style="
+            margin:22px 0;
+            border-color:rgba(255,255,255,.08);
+        ">
 
         <!-- CONTENT -->
-        <p style="
-            line-height:1.9;
+        <div style="
+            color:#d7d7d7;
             font-size:17px;
-            color:#d6d6d6;
+            line-height:1.9;
             white-space:pre-line;
         ">
             {{ post.content }}
-        </p>
-
-        <!-- =========================
-             BOTTOM ACTION BAR
-        ========================== -->
-        {% if request.user == post.author %}
-
-        <div style="
-            margin-top:40px;
-            padding-top:20px;
-            border-top:1px solid rgba(255,255,255,0.08);
-
-            display:flex;
-            justify-content:flex-end;
-            gap:12px;
-            align-items:center;
-        ">
-
-            <!-- EDIT BUTTON -->
-            <a href="{% url 'post_edit' post.slug %}" style="
-                display:inline-flex;
-                align-items:center;
-                gap:8px;
-
-                padding:10px 18px;
-                border-radius:14px;
-
-                background:rgba(124,58,237,0.12);
-                border:1px solid rgba(124,58,237,0.35);
-                color:#c4b5fd;
-
-                font-weight:600;
-                font-size:14px;
-
-                text-decoration:none;
-
-                transition:0.25s;
-                backdrop-filter: blur(10px);
-            "
-            onmouseover="this.style.transform='translateY(-2px)'"
-            onmouseout="this.style.transform='translateY(0)'"
-            >
-                ✏️ Edit
-            </a>
-
-            <!-- DELETE BUTTON -->
-            <a href="{% url 'post_delete' post.slug %}" style="
-                display:inline-flex;
-                align-items:center;
-                gap:8px;
-
-                padding:10px 18px;
-                border-radius:14px;
-
-                background:rgba(239,68,68,0.12);
-                border:1px solid rgba(239,68,68,0.35);
-                color:#fca5a5;
-
-                font-weight:600;
-                font-size:14px;
-
-                text-decoration:none;
-
-                transition:0.25s;
-                backdrop-filter: blur(10px);
-            "
-            onmouseover="this.style.transform='translateY(-2px)'"
-            onmouseout="this.style.transform='translateY(0)'"
-            >
-                🗑️ Delete
-            </a>
-
         </div>
 
-        {% endif %}
+        <!-- TAGS + ACTIONS -->
+        <div style="
+            margin-top:40px;
+            padding-top:22px;
+            border-top:1px solid rgba(255,255,255,.08);
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:18px;
+        ">
+
+            <!-- TAGS -->
+            <div style="
+                display:flex;
+                flex-wrap:wrap;
+                gap:10px;
+            ">
+
+                {% for tag in post.tags.all %}
+
+                    <span style="
+                        padding:8px 14px;
+                        border-radius:999px;
+
+                        background:rgba(124,58,237,.12);
+                        border:1px solid rgba(124,58,237,.25);
+
+                        color:#c4b5fd;
+                        font-size:13px;
+                        font-weight:600;
+                    ">
+                        #{{ tag.name }}
+                    </span>
+
+                {% empty %}
+
+                    <span style="
+                        color:#777;
+                        font-size:14px;
+                    ">
+                        No tags
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- EDIT DELETE -->
+            {% if request.user == post.author %}
+
+            <div style="
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
+
+                <!-- EDIT -->
+                <a
+                    href="{% url 'post_edit' post.slug %}"
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+
+                        padding:10px 18px;
+
+                        border-radius:12px;
+
+                        background:rgba(59,130,246,.12);
+                        border:1px solid rgba(59,130,246,.30);
+
+                        color:#93c5fd;
+                        text-decoration:none;
+                        font-weight:600;
+
+                        transition:.25s;
+                    "
+                    onmouseover="this.style.transform='translateY(-2px)'"
+                    onmouseout="this.style.transform='translateY(0)'"
+                >
+                    ✏️ Edit
+                </a>
+
+                <!-- DELETE -->
+                <a
+                    href="{% url 'post_delete' post.slug %}"
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:8px;
+
+                        padding:10px 18px;
+
+                        border-radius:12px;
+
+                        background:rgba(239,68,68,.12);
+                        border:1px solid rgba(239,68,68,.30);
+
+                        color:#fca5a5;
+                        text-decoration:none;
+                        font-weight:600;
+
+                        transition:.25s;
+                    "
+                    onmouseover="this.style.transform='translateY(-2px)'"
+                    onmouseout="this.style.transform='translateY(0)'"
+                >
+                    🗑️ Delete
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
 
     </div>
 

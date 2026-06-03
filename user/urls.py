@@ -21,5 +21,6 @@ urlpatterns = [
     path('posts/',views.posts_list,name='post_list'),
     path('posts/<slug:slug>/',views.post_detail,name='post_detail'),
     path('posts/<slug:slug>/edit/',views.post_edit_view,name='post_edit'),
+    path('posts/create/',views.post_edit_view,name='post_create'),
     path('posts/<slug:slug>/delete/',views.post_delete_view,name='post_delete'),
 ]

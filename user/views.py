@@ -7,7 +7,6 @@ from .models import Post
 from . import models
 from .forms import RegisterForm,LoginForm,UserProfileUpdateForm,ProfileUpdateForm,PostForm
 
-# Create your views here.
 
 User = get_user_model()
 #            USER CRUDDDDD
@@ -215,8 +214,6 @@ def profile_edit_view(request):
 
 
 
-
-
 #   DELETE
 def profile_delete_view(request):
     if request.method == 'POST':
@@ -232,11 +229,12 @@ def profile_delete_view(request):
 
 #             POST CRUUUUDD
 def posts_list(request):
-    posts=Post.objects.select_related('author').all()
+    posts=Post.objects.prefetch_related('tags').select_related('author').all()
     return render(request,'post_list.html',{'posts':posts})
 
 def post_detail(request,slug):
-    post=get_object_or_404(Post,slug=slug)
+    post=Post.objects.prefetch_related('tags').select_related('author').get(slug=slug)
+
     return render(request,'post_detail.html',{'post':post})
 
 @login_required
@@ -252,6 +250,10 @@ def post_create_view(request):
             post.author = request.user
             post.save()
 
+            #ManyToMany commir = false bilan saqlanmaydi
+            # save m2m() ni alohida chaqiramiz
+
+            form.save_m2m()
             return redirect('post_detail',slug=post.slug)
         
         return render(request,'post_create.html',{'form':form}) 
@@ -292,3 +294,6 @@ def post_delete_view(request,slug):
         return redirect('post_list')
     
     return render(request,'post_delete_confirm.html',{'post':post})
+
+#    ORM -- OBJECT RELATIONAL MAPPING ->>>
+# IT ALLOWS DEVELOPERS TO INTERACT WITH DATABASE RECORDINGS
