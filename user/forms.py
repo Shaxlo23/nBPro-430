@@ -5,7 +5,7 @@ from django.contrib.auth.forms import (
 )
 
 
-from .models import CustomUser,UserProfile,Post,Tag 
+from .models import CustomUser,UserProfile,Post,Tag,Comment 
 
 #     RRGISTER FORM
 
@@ -142,3 +142,13 @@ class PostForm(forms.ModelForm):
         fields = ['title','content','image','tags']
 
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'rows':3,
+                'placeholder':'Izoh yozing...'
+            }),
+        }

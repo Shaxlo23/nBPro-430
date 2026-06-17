@@ -23,4 +23,7 @@ urlpatterns = [
     path('posts/<slug:slug>/edit/',views.post_edit_view,name='post_edit'),
     path('posts/create/',views.post_edit_view,name='post_create'),
     path('posts/<slug:slug>/delete/',views.post_delete_view,name='post_delete'),
+    path('search/',views.search_posts,name = 'search_posts'),
+    path('post/<slug:slug>/like/',views.like_toggle,name = 'like_toggle'),
+    path('post/<slug:slug>/comment/',views.add_comment,name = 'add_comment'),
 ]

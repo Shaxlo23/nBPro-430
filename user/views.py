@@ -3,9 +3,12 @@ from django.contrib.auth import get_user_model,login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 import uuid
-from .models import Post
+from .models import Post,Like,Comment
 from . import models
-from .forms import RegisterForm,LoginForm,UserProfileUpdateForm,ProfileUpdateForm,PostForm
+from .forms import RegisterForm,LoginForm,UserProfileUpdateForm,ProfileUpdateForm,PostForm,CommentForm
+
+from django.db.models import F,Q,Count
+
 
 
 User = get_user_model()
@@ -219,8 +222,8 @@ def profile_delete_view(request):
     if request.method == 'POST':
 
         user = request.user
-        logout(request)
-        user.delete()
+        logout(request)   #logout useerni chqarb tashlash
+        user.delete()    #userni ochrish
         return redirect('register')
 
     return render(request,'profile_delete_confirm.html')
@@ -229,20 +232,38 @@ def profile_delete_view(request):
 
 #             POST CRUUUUDD
 def posts_list(request):
-    posts=Post.objects.prefetch_related('tags').select_related('author').all()
+    posts=Post.objects.prefetch_related('tags').select_related('author').all()            #  'prefetch_related' M2M NI CHQARISH UCHUN 
     return render(request,'post_list.html',{'posts':posts})
 
 def post_detail(request,slug):
-    post=Post.objects.prefetch_related('tags').select_related('author').get(slug=slug)
+    post=Post.objects.prefetch_related('tags').select_related('author').get(slug=slug)     #  M2M NI CHQARISH UCHUN 
+    comments = post.comments.all()
+    comment_form = CommentForm()
 
-    return render(request,'post_detail.html',{'post':post})
+    #foydalanuvchi like bosganmi
+    user_liked = False
+    if request.user.is_authenticated:
+        user_liked = Like.objects.filter(user=request.user,post=post).exists()
+
+    context = {
+        'post':post,
+        'comments':comments,
+        'comment_form':comment_form,
+        'user_liked': user_liked,
+        'likes_count': post.likes.count(),
+        'comments_count':post.comments.count(),
+    }
+    return render(request,'post_detail.html',context)
 
 @login_required
 def post_create_view(request):
     form = PostForm()
 
     if request.method == 'POST':
-        form = PostForm(request.POST,request.FILES)
+        form = PostForm(
+            request.POST,
+            request.FILES
+            )
 
         if form.is_valid():
             post = form.save(commit=False)
@@ -297,3 +318,47 @@ def post_delete_view(request,slug):
 
 #    ORM -- OBJECT RELATIONAL MAPPING ->>>
 # IT ALLOWS DEVELOPERS TO INTERACT WITH DATABASE RECORDINGS
+
+def search_posts(request):
+    query = request.GET.get('q','')
+    posts = Post.objects.all()
+
+    if query:
+        posts = posts.filter(
+            Q(title__icontains = query) |
+            Q(content__icontains = query) |
+            Q(tags__name__icontains = query) |
+            Q(author__first_name__icontains = query) |
+            Q(author__last_name__icontains = query) 
+        ).distinct()
+
+    context = {
+        'posts':posts,
+        'query':query,
+        'posts_count':posts.count(),
+    }
+    return render(request,'search_results.html',context)
+
+@login_required
+def like_toggle(request,slug):
+    post= get_object_or_404(Post,slug = slug)
+    like,created = Like.objects.get_or_create(user=request.user,post=post)
+
+    if not created:
+        #avval like bosilgan bo'lsa -> like o'chiramz
+        like.delete()
+
+    return redirect('post_detail',slug=post.slug)
+
+@login_required
+def add_comment(request,slug):
+    post = get_object_or_404(Post,slug=slug)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user 
+            comment.save()
+    return redirect('post_detail',slug=post.slug)

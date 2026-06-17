@@ -102,11 +102,6 @@ class Post(models.Model):
         related_name='posts'
     )
 
-    tags = models.ManyToManyField(
-        Tag,
-        blank=True,
-        related_name='posts'
-    )
 
     title = models.CharField(max_length=200)
     content = models.TextField()
@@ -118,6 +113,15 @@ class Post(models.Model):
     )
 
     slug = models.SlugField(unique=True, blank=True)
+
+    views_count =  models.PositiveIntegerField(default=0)
+    liked_count =  models.PositiveIntegerField(default=0)
+
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True,
+        related_name='posts'
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -135,3 +139,42 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
+    
+
+class Like(models.Model):
+    user = models.ForeignKey(
+        CustomUser,on_delete=models.CASCADE,related_name='likes'
+    )
+
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE,related_name='likes'
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    class Meta:
+        unique_together = ('user','post') #bir user- bir postga 1 ta like
+
+    def __str__(self):
+        return f"{self.user.email} -> {self.post.title}"
+    
+
+class Comment(models.Model):
+
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='comments'
+    )
+
+    author = models.ForeignKey(
+        CustomUser,on_delete= models.CASCADE, related_name='comments'
+    )
+
+    content =  models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.author.email} - {self.post.title}"
