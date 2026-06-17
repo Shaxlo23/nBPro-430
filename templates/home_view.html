@@ -2,206 +2,358 @@
 
 {% block content %}
 
-<div class="dark-card">
+<style>
+
+    .home-card {
+        animation: fadeUp 0.8s ease;
+    }
+
+    .user-card {
+        background: linear-gradient(
+            145deg,
+            #151515,
+            #101010
+        );
+        border:1px solid #2d2d2d;
+        border-radius:20px;
+        padding:22px;
+        transition:all .35s ease;
+        position:relative;
+        overflow:hidden;
+    }
+
+
+    .user-card::before {
+        content:"";
+        position:absolute;
+        width:120px;
+        height:120px;
+        background:#7c3aed;
+        filter:blur(80px);
+        opacity:.15;
+        top:-40px;
+        right:-40px;
+    }
+
+
+    .user-card:hover {
+        transform:translateY(-8px);
+        border-color:#7c3aed;
+        box-shadow:0 20px 40px rgba(0,0,0,.5);
+    }
+
+
+    .avatar {
+        width:60px;
+        height:60px;
+        border-radius:50%;
+        background:linear-gradient(
+            135deg,
+            #7c3aed,
+            #a855f7
+        );
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:22px;
+        font-weight:bold;
+        color:white;
+        box-shadow:0 0 25px rgba(124,58,237,.5);
+        animation:pulse 3s infinite;
+    }
+
+
+    .profile-btn {
+        display:inline-block;
+        padding:10px 18px;
+        border-radius:12px;
+        background:#7c3aed;
+        color:white;
+        text-decoration:none;
+        transition:.3s;
+        font-weight:600;
+    }
+
+
+    .profile-btn:hover {
+        background:#9333ea;
+        transform:scale(1.05);
+        box-shadow:0 0 20px rgba(124,58,237,.5);
+    }
+
+
+    .website-box {
+        background:rgba(20,20,20,.7);
+        backdrop-filter:blur(10px);
+        border:1px solid #333;
+        padding:18px 25px;
+        border-radius:18px;
+        animation:slideRight .8s ease;
+    }
+
+
+    .title {
+        animation:fadeLeft .8s ease;
+    }
+
+
+    @keyframes fadeUp {
+
+        from {
+            opacity:0;
+            transform:translateY(40px);
+        }
+
+        to {
+            opacity:1;
+            transform:translateY(0);
+        }
+
+    }
+
+
+    @keyframes fadeLeft {
+
+        from {
+            opacity:0;
+            transform:translateX(-40px);
+        }
+
+        to {
+            opacity:1;
+            transform:translateX(0);
+        }
+
+    }
+
+
+    @keyframes slideRight {
+
+        from {
+            opacity:0;
+            transform:translateX(40px);
+        }
+
+        to {
+            opacity:1;
+            transform:translateX(0);
+        }
+
+    }
+
+
+    @keyframes pulse {
+
+        0%,100% {
+            box-shadow:0 0 20px rgba(124,58,237,.4);
+        }
+
+        50% {
+            box-shadow:0 0 35px rgba(168,85,247,.8);
+        }
+
+    }
+
+
+</style>
+
+
+<div class="dark-card home-card">
+
 
     <div style="
         display:flex;
         justify-content:space-between;
         align-items:center;
         flex-wrap:wrap;
-        gap:15px;
-        margin-bottom:25px;
+        gap:20px;
+        margin-bottom:30px;
     ">
 
-        <div>
+
+        <div class="title">
 
             <h1 style="
-                font-size:42px;
-                font-weight:bold;
+                font-size:45px;
+                font-weight:800;
                 margin-bottom:10px;
             ">
                 🏠 Home Page
             </h1>
 
+
             <p style="
                 color:#a1a1aa;
                 font-size:18px;
-                margin:0;
             ">
                 Welcome back 👋 Bu yerda barcha users ko‘rinadi.
             </p>
 
         </div>
 
-        <div style="
-            background:#121212;
-            border:1px solid #2e2e2e;
-            padding:15px 20px;
-            border-radius:15px;
-            min-width:220px;
-        ">
+
+
+        <div class="website-box">
 
             <p style="
                 margin:0;
                 color:#888;
-                font-size:14px;
             ">
                 🌐 Website
             </p>
 
-            <h5 style="
-                margin-top:5px;
+
+            <h4 style="
                 color:white;
+                margin-top:7px;
             ">
                 myproject.com
-            </h5>
+            </h4>
 
         </div>
 
+
     </div>
+
 
     <hr>
 
-    <div style="
-        margin-top:30px;
-        margin-bottom:25px;
-    ">
 
-        <h2 style="
-            font-weight:bold;
-            margin-bottom:10px;
-        ">
+    <div style="margin:30px 0">
+
+        <h2 style="font-weight:800">
             👥 Users List
         </h2>
 
-        <p style="
-            color:#8d8d8d;
-        ">
+        <p style="color:#888">
             User ustiga bossangiz profile, bio va website chiqadi.
         </p>
 
     </div>
 
+
+
     {% if users %}
 
-        <div style="
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-            gap:20px;
-        ">
 
-            {% for user in users %}
+    <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+        gap:22px;
+    ">
 
-                <div style="
-                    background:#141414;
-                    border:1px solid #2d2d2d;
-                    border-radius:18px;
-                    padding:20px;
-                    transition:0.3s;
-                ">
 
-                    <div style="
-                        display:flex;
-                        align-items:center;
-                        gap:15px;
-                        margin-bottom:15px;
-                    ">
+    {% for user in users %}
 
-                        <div style="
-                            width:55px;
-                            height:55px;
-                            border-radius:50%;
-                            background:#7c3aed;
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            font-size:20px;
-                            font-weight:bold;
-                        ">
-                            {{ user.first_name|slice:":1" }}
-                        </div>
 
-                        <div>
+        <div class="user-card">
 
-                            <h5 style="
-                                margin:0;
-                                color:white;
-                                font-weight:bold;
-                            ">
-                                {{ user.first_name }} {{ user.last_name }}
-                            </h5>
 
-                            <p style="
-                                margin:0;
-                                color:#777;
-                                font-size:14px;
-                            ">
-                                Active User
-                            </p>
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:15px;
+                margin-bottom:20px;
+            ">
 
-                        </div>
 
-                    </div>
+                <div class="avatar">
 
-                    <p style="
-                        color:#9b9b9b;
-                        font-size:14px;
-                        margin-bottom:20px;
-                    ">
-                        Bu user haqida bio va website info profile page ichida bo‘ladi.
-                    </p>
-
-                    {% if user.slug %}
-
-                        <a href="{% url 'user_view' user.slug %}"
-                           class="btn-dark-custom">
-                            View Profile →
-                        </a>
-
-                    {% else %}
-
-                        <span style="
-                            color:#777;
-                        ">
-                            Slug topilmadi
-                        </span>
-
-                    {% endif %}
+                    {{ user.first_name|slice:":1" }}
 
                 </div>
 
-            {% endfor %}
+
+                <div>
+
+                    <h4 style="
+                        margin:0;
+                        color:white;
+                    ">
+                        {{ user.first_name }}
+                        {{ user.last_name }}
+                    </h4>
+
+
+                    <p style="
+                        margin:5px 0;
+                        color:#777;
+                    ">
+                        ● Active User
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <p style="
+                color:#999;
+                line-height:1.6;
+            ">
+                Bu user haqida bio va website info profile page ichida bo‘ladi.
+            </p>
+
+
+
+            {% if user.slug %}
+
+
+            <a class="profile-btn"
+               href="{% url 'user_view' user.slug %}">
+                View Profile →
+            </a>
+
+
+            {% else %}
+
+
+            <span style="color:#777">
+                Slug topilmadi
+            </span>
+
+
+            {% endif %}
+
+
 
         </div>
+
+
+    {% endfor %}
+
+
+    </div>
+
+
 
     {% else %}
 
-        <div style="
-            background:#151515;
-            border:1px solid #2c2c2c;
-            border-radius:15px;
-            padding:25px;
-            text-align:center;
-        ">
 
-            <h4 style="
-                color:white;
-                margin-bottom:10px;
-            ">
-                No users found 😶
-            </h4>
+    <div style="
+        padding:30px;
+        text-align:center;
+        background:#151515;
+        border-radius:18px;
+    ">
 
-            <p style="
-                color:#888;
-                margin:0;
-            ">
-                Hozircha userlar yo‘q.
-            </p>
+        <h3>
+            No users found 😶
+        </h3>
 
-        </div>
+        <p style="color:#888">
+            Hozircha userlar yo‘q.
+        </p>
+
+    </div>
+
 
     {% endif %}
 
+
 </div>
+
 
 {% endblock %}
